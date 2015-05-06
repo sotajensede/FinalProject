@@ -14,8 +14,6 @@ import android.util.Log;
  * May 5, 2015
  */
 
-
-
 public class DBAdapter {
 
     private final Context context;
