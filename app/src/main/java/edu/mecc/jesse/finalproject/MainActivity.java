@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -23,6 +24,39 @@ public class MainActivity extends ActionBarActivity {
         Button btnAdd = (Button) findViewById(R.id.btnOne);
         Button btnClear = (Button) findViewById(R.id.btnTwo);
         Button btnDisplay = (Button) findViewById(R.id.btnThree);
+
+        final TextView textView = (TextView) findViewById(R.id.textDisplay);
+
+        final EditText editText = (EditText) findViewById(R.id.editText);
+
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String wholeStr = editText.getText().toString();
+                String[] splitStr = wholeStr.split("\\s+");
+                //TODO
+                //More checks for number of args passed through editText object
+                //e.g. check for rowID and update/delete
+                if(splitStr.length < 3)
+                    textView.setText("Enter student name, number, and favorite color.");
+                else
+                    myDB.insertRow(splitStr[0], Integer.parseInt(splitStr[1]), splitStr[2]);
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnDisplay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
     }
 
