@@ -1,9 +1,13 @@
 package edu.mecc.jesse.finalproject;
 
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -15,6 +19,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         openDB();
+
+        Button btnAdd = (Button) findViewById(R.id.btnOne);
+        Button btnClear = (Button) findViewById(R.id.btnTwo);
+        Button btnDisplay = (Button) findViewById(R.id.btnThree);
+
     }
 
     @Override
@@ -26,6 +35,42 @@ public class MainActivity extends ActionBarActivity {
     private void openDB() {
         myDB = new DBAdapter(this);
         myDB.open();
+    }
+
+    private void closeDB() {
+        myDB.close();
+    }
+
+    private void displayText(String message) {
+        TextView textView = (TextView) findViewById(R.id.textDisplay);
+        textView.setText(message);
+    }
+
+    public void onClick_AddRecord(View v) {
+        displayText("Clicked add record!");
+
+        long newId = myDB.insertRow("Jenny", 5559, "Green");
+
+        Cursor cursor = myDB.getRow(newId);
+        displayRecordSet(cursor);
+    }
+
+    private void displayRecordSet (Cursor cursor) {
+        String message = "";
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(DBAdapter.COL_ROWID);
+                String name = cursor.getString(DBAdapter.COL_NAME);
+                int studentNumber = cursor.getInt(DBAdapter.COL_STUDENTNUM);
+                String favColor = cursor.getString(DBAdapter.COL_FAVCOLOR);
+
+                message += "id=" + id + ", name = " + name + ", # = " + studentNumber
+                        + ", color = " + favColor + "\n";
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        displayText(message);
     }
 
     @Override
