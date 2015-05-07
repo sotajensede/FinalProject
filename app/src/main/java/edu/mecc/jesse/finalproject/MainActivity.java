@@ -1,7 +1,5 @@
 package edu.mecc.jesse.finalproject;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -27,57 +25,37 @@ public class MainActivity extends ActionBarActivity {
         Button btnClear = (Button) findViewById(R.id.btnTwo);
         Button btnDisplay = (Button) findViewById(R.id.btnThree);
 
-        final TextView textView = (TextView) findViewById(R.id.textDisplay);
-
         final EditText editText = (EditText) findViewById(R.id.editText);
 
+        //ADD BUTTON
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String wholeStr = editText.getText().toString();
                 String[] splitStr = wholeStr.split("\\s+");
 
                 if(splitStr.length < 3)
-                    textView.setText("Enter student name, number, and favorite color.");
+                    onClick_AddRecord(v);
                 else if(splitStr.length == 4)
                     myDB.updateRow(Long.parseLong(splitStr[0],10), splitStr[1],
-                                   Integer.parseInt(splitStr[2]), splitStr[3]);
+                            Integer.parseInt(splitStr[2]), splitStr[3]);
                 else
                     myDB.insertRow(splitStr[0], Integer.parseInt(splitStr[1]), splitStr[2]);
             }
         });
-
+        // CLEAR BUTTON
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder adBuilder = new AlertDialog.Builder(getApplicationContext());
-                adBuilder.setTitle("Clear Database");
-                adBuilder.setMessage("This will clear the database, are you sure?");
-                adBuilder.setPositiveButton("Yes",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            myDB.deleteAll();
-                        }
-                    }
-                );
-                adBuilder.setNegativeButton("No",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    }
-                );
-                AlertDialog alertOnClear = adBuilder.create();
-                alertOnClear.show();
+                myDB.deleteAll();
             }
         });
-
+        //DISPLAY BUTTON
         btnDisplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                displayRecordSet(myDB.getAllRows());
             }
         });
 

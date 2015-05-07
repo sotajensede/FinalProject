@@ -54,26 +54,23 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:id="@+id/editText"
-                android:layout_gravity="center_horizontal"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:id="@+id/textView"
+                android:id="@+id/textDisplay"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="0.03"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/editText"
                 android:layout_below="@+id/textDisplay"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="74dp" />
+                android:layout_marginTop="58dp" />
         </RelativeLayout>
 
     </LinearLayout>
